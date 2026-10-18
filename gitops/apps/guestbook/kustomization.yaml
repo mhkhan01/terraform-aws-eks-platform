@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: guestbook
+labels:
+  - pairs:
+      app.kubernetes.io/name: guestbook
+      app.kubernetes.io/part-of: eks-platform-demo
+    includeSelectors: true
+resources:
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml

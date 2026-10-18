@@ -1,0 +1,5 @@
+# Everything the root Application syncs: one Argo CD Application per workload.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - guestbook.yaml

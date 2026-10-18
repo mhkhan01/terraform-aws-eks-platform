@@ -1,0 +1,6 @@
+framework:
+  - terraform
+# Resource-specific exceptions are inline (# checkov:skip=...) next to the code they apply to.
+skip-check:
+  # AZ names sort alphabetically and new AZs get later letters, so slice(names, 0, az_count) stays stable; pinning zone names would hard-code a region into a reusable module.
+  - CKV_AWS_394

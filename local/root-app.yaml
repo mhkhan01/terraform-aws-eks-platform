@@ -1,0 +1,21 @@
+# Same root app-of-apps that Terraform creates on EKS through the argocd-apps chart.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mhkhan01/terraform-aws-eks-platform.git
+    targetRevision: main
+    path: gitops/bootstrap
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,26 @@
+# Picked up by the AWS Load Balancer Controller on EKS. On the local kind lab
+# there is no "alb" controller, so this Ingress simply stays without an address.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip # route straight to pod IPs (VPC CNI)
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    # Add an ACM certificate and HTTPS listener for anything beyond a demo:
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-2:123456789012:certificate/example
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: guestbook
+                port:
+                  name: http
